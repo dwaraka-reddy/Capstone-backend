@@ -33,7 +33,7 @@ exports.signUpStep2 = async (req, res) => {
 
 exports.signUpStep3 = async (req, res) => {
     const { tempId, ...otherDetails } = req.body;
-    console.log('Expertise from request:', req.body.expertise);
+    // console.log('Expertise from request:', req.body.expertise);
 
     if (temporarySignUps[tempId] && temporarySignUps[tempId].userType) {
         const userData = { ...temporarySignUps[tempId], ...otherDetails };
@@ -42,7 +42,7 @@ exports.signUpStep3 = async (req, res) => {
             delete temporarySignUps[tempId];
             res.status(201).send({ message: "Signup complete", userId: newUser.id });
         } catch (error) {
-            console.error("Error during user creation:", error);
+            // console.error("Error during user creation:", error);
             res.status(500).send({ message: "Error saving user." });
         }
     } else {
