@@ -4,7 +4,7 @@ const Post = require('../models/post');
 
 exports.customerDashboard = async (req, res) => {
     try {
-        const workers = await User.findAll({ where: { userType: 'worker' }, attributes: { exclude: ['id', 'password'] } });
+        const workers = await User.findAll({ where: { userType: 'worker' }, attributes: { exclude: ['id', 'password', 'isStep2Completed', 'isStep3Completed'] } });
         res.send(workers);
     } catch (error) {
         res.status(500).send({ message: 'Error fetching workers' });
@@ -29,7 +29,7 @@ exports.searchWorkers = async (req, res) => {
                 expertise: {
                     [Op.contains]: [expertise]
                 }
-            }, attributes: { exclude: ['id', 'password'] } 
+            }, attributes: { exclude: ['id', 'password', 'isStep2Completed', 'isStep3Completed'] } 
         });
         res.send(workers);
     } catch (error) {

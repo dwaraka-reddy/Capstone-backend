@@ -31,8 +31,8 @@ const requestController = {
       const requests = await Request.findAll({
         where: { toUsername: username },
         include: [
-          { model: User, as: 'fromUser', attributes: { exclude: ['id', 'password'] } },
-          { model: User, as: 'toUser', attributes: { exclude: ['id', 'password'] } }
+          { model: User, as: 'fromUser', attributes: { exclude: ['id', 'password', 'isStep2Completed', 'isStep3Completed'] } },
+          { model: User, as: 'toUser', attributes: { exclude: ['id', 'password', 'isStep2Completed', 'isStep3Completed'] } }
         ]
       });
       res.status(200).send(requests);

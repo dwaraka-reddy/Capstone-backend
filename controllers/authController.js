@@ -37,9 +37,9 @@ exports.signIn = async (req, res) => {
 };
 
 exports.signUpStep2 = async (req, res) => {
-    const { username, userType } = req.body;
+    const { userType } = req.body;
     try {
-        const user = await User.findOne({ where: { username } });
+        const user = await User.findOne({ where: { username : req.user.username } });
         if (user) {
             user.userType = userType;
             user.isStep2Completed = true;
@@ -56,9 +56,9 @@ exports.signUpStep2 = async (req, res) => {
 };
 
 exports.signUpStep3 = async (req, res) => {
-    const { username, ...otherDetails } = req.body;
+    const { ...otherDetails } = req.body;
     try {
-        const user = await User.findOne({ where: { username } });
+        const user = await User.findOne({ where: { username : req.user.username } });
         if (user) {
             Object.assign(user, otherDetails);
             user.isStep3Completed = true;
