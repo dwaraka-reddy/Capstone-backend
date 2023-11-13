@@ -75,6 +75,29 @@ exports.signUpStep3 = async (req, res) => {
     }
 };
 
+exports.signUpStep4 = async (req, res) => {
+    const { expertise } = req.body;
+    try {
+        const user = await User.findOne({ where: { username: req.user.username } });
+        if (!user) {
+            return res.status(404).send({ message: "User not found." });
+        }
+        if (user.userType === 'worker') {
+            user.expertise = expertise;
+            await user.save();
+            res.status(200).send({ message: "Expertise updated successfully.", username: user.username,
+            step2Completed: user.isStep2Completed,
+            step3Completed: user.isStep3Completed  });
+        } else {
+            res.status(200).send({ message: "No expertise update needed for customer.", username: user.username });
+        }
+    } catch (error) {
+        console.error("Sign Up Step 4 Error:", error);
+        res.status(500).send({ message: "Error in updating expertise." });
+    }
+};
+
+
 exports.updateUser = async (req, res) => {
     try {
         const username = req.body.username;

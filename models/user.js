@@ -33,7 +33,7 @@ User.init({
         allowNull: true
     },
     expertise: {
-        type: DataTypes.ARRAY(DataTypes.STRING), // Array datatype for PostgreSQL
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true
     },
     isStep2Completed: {
