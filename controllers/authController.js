@@ -30,7 +30,7 @@ exports.signIn = async (req, res) => {
             return res.status(400).send({ message: 'Invalid credentials' });
         }
         const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '72h' });
-        res.send({ username: user.username, token, step2Completed: user.isStep2Completed, step3Completed: user.isStep3Completed });
+        res.send({ username: user.username, token, userType: user.userType, step2Completed: user.isStep2Completed, step3Completed: user.isStep3Completed });
     } catch (error) {
         res.status(500).send({ message: 'Error logging in' });
     }
@@ -65,6 +65,7 @@ exports.signUpStep3 = async (req, res) => {
             await user.save();
             res.status(200).send({ message: "Profile updated successfully.",
             username: user.username,
+            userType: user.userType,
             step2Completed: user.isStep2Completed,
             step3Completed: user.isStep3Completed });
         } else {
