@@ -115,3 +115,19 @@ exports.updateUser = async (req, res) => {
         res.status(500).send({ message: 'Error updating user', error: error.message });
     }
 };
+
+exports.getUserProfile = async (req, res) => {
+    try {
+        const username = req.user.username;
+        const user = await User.findOne({ where: { username: username } });
+        if (!user) {
+            return res.status(404).send({ message: 'User not found' });
+        }
+        const userWithoutSensitiveData = user.toJSON();
+        delete userWithoutSensitiveData.password;
+        res.send(userWithoutSensitiveData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Error retrieving user profile', error: error.message });
+    }
+};
